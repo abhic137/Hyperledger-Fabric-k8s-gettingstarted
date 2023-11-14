@@ -20,3 +20,9 @@ sudo snap install kontena-lens --classic
 
 
 ```
+
+Create and add 4 nodes
+```
+follow the commands from here : https://github.com/abhic137/k8-multinode-kubeadm
+kubectl get nodes
+```
