@@ -51,8 +51,12 @@ sudo systemctl restart nfs-kernel-server
 ```
 ### setting up NFS client ie., host local machine
 ```
-mkdir nfs_clientshare
-sudo mount -o nolocks -t nfs <IP_OF_NFS_Server>:/mnt/nfs_share ./nfs_clientshare
+sudo apt update
+sudo apt install nfs-common
+sudo mkdir -p /mnt/nfs_clientshare
+sudo mount <IP_OF_NFS_SERVER>:/mnt/nfs_share /mnt/nfs_clientshare
+ls -l /mnt/nfs_clientshare/
+
 ```
 ### To check 
 ssh into ther NFS server
@@ -68,3 +72,4 @@ ls
 touch example.txt
 ```
 now go back to the server pc and re run the commands now you will find the file inside it.
+
