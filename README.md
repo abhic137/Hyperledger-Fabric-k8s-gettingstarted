@@ -26,7 +26,8 @@ sudo snap install kontena-lens --classic
 follow the commands from here : https://github.com/abhic137/k8-multinode-kubeadm
 kubectl get nodes
 ```
-## install nfs server for volume (pv and pvc)
+## setup NFS server for volume (pv and pvc)
+### Setting up NFS server
 take anew pc or a vm with ubuntu
 ```
 sudo apt install nfs-kernel-server
@@ -48,3 +49,4 @@ echo "/mnt/nfs_share *(rw,sync,no_subtree_check,insecure)" | sudo tee -a /etc/ex
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 ```
+### setting up NFS client ie., host
