@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer0-org1
+spec:
+  selector:
+    matchLabels:
+      name: peer0-org1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: peer0-org1
+    spec:
+      volumes:
+        - name: fabricfiles
+          persistentVolumeClaim:
+            claimName: mypvc
+        - name: builders-config
+          configMap:
+            name: builders-config
+            items:
+              - key: core.yaml
+                path: core.yaml
+        - name: external-builder-detect
+          configMap:
+            name: builders-config
+            items:
+              - key: detect
+                path: detect
+                mode: 0544
+        - name: external-builder-build
+          configMap:
+            name: builders-config
+            items:
+              - key: build
+                path: build
+                mode: 0544
+        - name: external-builder-release
+          configMap:
+            name: builders-config
+            items:
+              - key: release
+                path: release
+                mode: 0544
+      containers:
+        - name: peer
+          image: hyperledger/fabric-peer:2.3
+          command: ["sh", "-c", "peer node start"]
+          env:
+            - name: CORE_PEER_ADDRESSAUTODETECT
+              value: "true"
+            - name: CORE_PEER_ID
+              value: peer0-org1
+            - name: CORE_PEER_ADDRESS
+              value: peer0-org1:7051
+            - name: CORE_PEER_LISTENADDRESS
+              value: 0.0.0.0:7051
+            - name: CORE_PEER_EVENTS_ADDRESS
+              value: 0.0.0.0:7061
+            - name: CORE_PEER_GOSSIP_BOOTSTRAP
+              value: peer0-org1:7051
+            - name: CORE_PEER_GOSSIP_ENDPOINT
+              value: peer0-org1:7051
+            - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+              value: peer0-org1:7051
+            - name: CORE_PEER_GOSSIP_ORGLEADER
+              value: "false"
+            - name: CORE_PEER_GOSSIP_USELEADERELECTION
+              value: "true"
+            - name: CORE_PEER_PROFILE_ENABLED
+              value: "true"
+            - name: CORE_PEER_LOCALMSPID
+              value: Org1MSP
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp
+            - name: FABRIC_LOGGING_SPEC
+              value: debug
+            - name: CORE_PEER_TLS_ENABLED
+              value: "true"
+            - name: CORE_PEER_TLS_CERT_FILE
+              value: /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+            - name: CORE_PEER_TLS_KEY_FILE
+              value: /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+            - name: CORE_PEER_TLS_ROOTCERT_FILE
+              value: /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+            - name: CORE_LEDGER_STATE_STATEDATABASE
+              value: "CouchDB"
+            - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+              value: "localhost:5984"
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric
+            - name: CORE_OPERATIONS_LISTENADDRESS
+              value: 0.0.0.0:9443
+            - name: CORE_METRICS_PROVIDER
+              value: prometheus
+          ports:    
+            - containerPort: 7051
+            - containerPort: 7052
+            - containerPort: 7053
+            - containerPort: 9443
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "300m"
+            requests:
+              memory: "200Mi"
+              cpu: "200m"
+          volumeMounts:
+            - mountPath: /opt/gopath/src/github.com/chaincode/
+              name: fabricfiles
+              subPath: chaincode/
+            - mountPath: /organizations
+              name: fabricfiles
+              subPath: organizations
+            - mountPath: /var/hyperledger/production
+              name: fabricfiles
+              subPath: state/org1/peer0
+            - mountPath: /etc/hyperledger/fabric/core.yaml
+              name: builders-config
+              subPath: core.yaml
+            - mountPath: /builders/external/bin/detect
+              name: external-builder-detect
+              subPath: detect
+            - mountPath: /builders/external/bin/build
+              name: external-builder-build
+              subPath: build
+            - mountPath: /builders/external/bin/release
+              name: external-builder-release
+              subPath: release
+
+
+        - name: couchdb
+          image: hyperledger/fabric-couchdb:0.4.15
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "300m"
+            requests:
+              memory: "200Mi"
+              cpu: "200m"
+          volumeMounts:
+            - mountPath: /opt/couchdb/data
+              name: fabricfiles
+              subPath: state/org1/peer0-couchdb

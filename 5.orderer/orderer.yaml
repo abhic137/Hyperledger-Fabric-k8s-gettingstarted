@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: orderer
+spec:
+    selector:
+        matchLabels:
+            name: orderer
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                name: orderer
+        spec:
+           volumes:
+             - name: fabricfiles
+               persistentVolumeClaim:
+                  claimName: mypvc
+           containers:
+             - image: hyperledger/fabric-orderer:2.3
+               name: orderer
+               imagePullPolicy: IfNotPresent
+               env:
+                - name: CONFIGTX_ORDERER_ADDRESSES
+                  value: "orderer:7050"
+                - name: ORDERER_GENERAL_LISTENADDRESS
+                  value: "0.0.0.0"
+                - name: ORDERER_GENERAL_LISTENPORT
+                  value: "7050"
+                - name: ORDERER_GENERAL_LOGLEVEL
+                  value: debug
+                - name: ORDERER_GENERAL_LOCALMSPDIR
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp
+                - name: ORDERER_GENERAL_LOCALMSPID
+                  value: OrdererMSP
+                - name: ORDERER_GENERAL_GENESISMETHOD
+                  value: file
+                - name: ORDERER_GENERAL_GENESISFILE
+                  value: /system-genesis-block/genesis.block
+                - name: ORDERER_GENERAL_TLS_ENABLED
+                  value: "true"
+                - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+                - name: ORDERER_GENERAL_TLS_CERTIFICATE
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+                - name: ORDERER_GENERAL_TLS_ROOTCAS
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+                - name:  ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+                - name:  ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+                  value: /organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+               
+               resources:
+                 limits:
+                    memory: "250Mi"
+                    cpu: "250m"
+                 requests:
+                    memory: "200Mi"
+                    cpu: "150m"               
+               
+               volumeMounts:
+                - name:  fabricfiles
+                  mountPath:  /organizations
+                  subPath: organizations
+          
+                - name: fabricfiles
+                  mountPath: /system-genesis-block
+                  subPath: system-genesis-block

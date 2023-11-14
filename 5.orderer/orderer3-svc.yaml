@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: orderer3
+    labels:
+        run: orderer3
+spec:
+    selector:
+        name: orderer3
+    type: ClusterIP
+    ports:
+        - protocol: TCP
+          port: 7050
+          name: grpc

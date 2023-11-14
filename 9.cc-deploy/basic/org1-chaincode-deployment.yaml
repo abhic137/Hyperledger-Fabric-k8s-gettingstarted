@@ -1,0 +1,30 @@
+---
+#---------------- Chaincode Deployment ---------------------
+apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: chaincode-basic-org1
+  labels:
+    app: chaincode-basic-org1
+spec:
+  selector:
+    matchLabels:
+      app: chaincode-basic-org1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: chaincode-basic-org1
+    spec:
+      containers:
+        - image: adityajoshi12/basic-cc-hlf:1.0
+          imagePullPolicy: Always
+          name: chaincode-basic-org1
+          env:
+            - name: CHAINCODE_ID
+              value: "basic:1b4b6c340a047595a1d27c9fdd1dc031467e02069ee6cec7904f999d31a49e23"
+            - name: CHAINCODE_SERVER_ADDRESS
+              value: "0.0.0.0:7052"
+          ports:
+            - containerPort: 7052

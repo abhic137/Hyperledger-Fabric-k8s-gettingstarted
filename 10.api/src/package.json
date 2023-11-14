@@ -1,0 +1,14 @@
+{
+    "name": "api",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express":"4.17.1",
+        "fabric-ca-client": "2.2.4",
+        "fabric-network": "2.2.3",
+        "body-parser":"1.19.0",
+        "cors": "^2.8.5",
+        "morgan":"1.10.0"
+    }
+}
