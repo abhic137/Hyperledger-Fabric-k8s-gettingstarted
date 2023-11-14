@@ -73,3 +73,7 @@ touch example.txt
 ```
 now go back to the server pc and re run the commands now you will find the file inside it.
 
+## Adding PV and PVC to Kubernets cluster
+```
+
+```
