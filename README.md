@@ -38,3 +38,13 @@ sudo mkdir -p /mnt/nfs_share
 sudo chmod -R nobody:nogroup /mnt/nfs_share/
 sudo chmod 777 /mnt/nfs_share
 ```
+config at the exports file
+```
+cat /etc/exports
+echo "/mnt/nfs_share *(rw,sync,no_subtree_check,insecure)" | sudo tee -a /etc/exports
+```
+(here "*" is a feild for ip if we want a specific ip to access the server)
+```
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+```
