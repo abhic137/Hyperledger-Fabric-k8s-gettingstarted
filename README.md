@@ -49,4 +49,8 @@ echo "/mnt/nfs_share *(rw,sync,no_subtree_check,insecure)" | sudo tee -a /etc/ex
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 ```
-### setting up NFS client ie., host
+### setting up NFS client ie., host local machine
+```
+mkdir nfs_clientshare
+sudo mount -o nolocks -t nfs <IP_OF_NFS_Server>:/mnt/nfs_share ./nfs_clientshare
+```
