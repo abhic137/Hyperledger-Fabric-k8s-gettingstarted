@@ -54,3 +54,17 @@ sudo systemctl restart nfs-kernel-server
 mkdir nfs_clientshare
 sudo mount -o nolocks -t nfs <IP_OF_NFS_Server>:/mnt/nfs_share ./nfs_clientshare
 ```
+### To check 
+ssh into ther NFS server
+```
+cd /mnt/nfs_share/
+ls
+```
+You will find nothing in this directory
+Now go to the client pc 
+```
+cd nfs_clientshare
+ls
+touch example.txt
+```
+now go back to the server pc and re run the commands now you will find the file inside it.
