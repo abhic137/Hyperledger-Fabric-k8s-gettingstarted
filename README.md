@@ -90,3 +90,19 @@ kubectl describe pv mypv
 kubectl describe pvc mypvc
 
 ```
+
+## add Nginix pods with pod.yaml
+```
+kubectl apply -f 1.nfs/pod.yaml
+```
+you can check it in the lens IDE under workloads > pods
+go inside the nfs machine
+```
+cd /mnt/nfs_share/
+ls
+```
+you can use lens to directly open the pod. or use the CLI to get inside the pod you can see the nfs files inside the pod.
+```
+cd /usr/share/nginx/html/
+ls
+```
