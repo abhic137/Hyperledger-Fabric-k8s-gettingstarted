@@ -121,3 +121,4 @@ updating the deployment (updating the image and incresaing the replicas)
 ```
 kubectl apply - https://k8s.io/examples/application/deployment-scale.yaml
 ```
+we can directly scale the number of repicas from the lens IDE directly
