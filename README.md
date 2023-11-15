@@ -74,7 +74,19 @@ touch example.txt
 now go back to the server pc and re run the commands now you will find the file inside it.
 
 ## Adding PV and PVC to Kubernets cluster
+add the ip of nfs inside the pv.yaml inside the nfs folder
 ```
+kubectl get nodes
+kubectl apply -f 1.nfs/pv.yaml
 
+```
+opens lens IDE and click on "+" to add cluster to check the info about the cluster
+(apply the persistance volume claims)
+```
+apply -f 1.nfs/pvc.yaml
+```
+```
+kubectl describe pv mypv
+kubectl describe pvc mypvc
 
 ```
