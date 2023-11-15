@@ -106,3 +106,18 @@ you can use lens to directly open the pod. or use the CLI to get inside the pod 
 cd /usr/share/nginx/html/
 ls
 ```
+## Running a Sample App in our K8's Setup
+```
+kubectl apply -f https://k8s.io/examples/application/deployment.yaml
+```
+go to lens IDE ypou can see under the pods sections to see the pods status
+```
+kubectl describe deployment nginx-deployment
+```
+```
+kubectl get pods -o wide
+```
+updating the deployment (updating the image and incresaing the replicas)
+```
+kubectl apply - https://k8s.io/examples/application/deployment-scale.yaml
+```
