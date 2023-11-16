@@ -1,0 +1,43 @@
+peer0-org1
+basic:1b4b6c340a047595a1d27c9fdd1dc031467e02069ee6cec7904f999d31a49e23
+
+peer0-org2
+basic:42cd6f87d7ae9c9c8e4e30e7d1d21404c1cb494f87a8831ae1988ed209521ca1
+
+peer0-org3
+basic:049eed4beb98bb94d45d5016b05f4f6a035c23b08232d5bc198ead2cd8fbedf4
+
+
+approve chaincode peer0-org1
+peer lifecycle chaincode approveformyorg --channelID mychannel --name basic --version 1.0 --init-required --package-id basic:1b4b6c340a047595a1d27c9fdd1dc031467e02069ee6cec7904f999d31a49e23 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
+
+
+approve chaincode peer0-org2
+peer lifecycle chaincode approveformyorg --channelID mychannel --name basic --version 1.0 --init-required --package-id basic:42cd6f87d7ae9c9c8e4e30e7d1d21404c1cb494f87a8831ae1988ed209521ca1 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
+
+
+approve chaincode peer0-org3
+peer lifecycle chaincode approveformyorg --channelID mychannel --name basic --version 1.0 --init-required --package-id basic:049eed4beb98bb94d45d5016b05f4f6a035c23b08232d5bc198ead2cd8fbedf4 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
+
+
+
+checkcommitreadiness
+peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic --version 1.0 --init-required --sequence 1 -o -orderer:7050 --tls --cafile $ORDERER_CA
+
+
+commit chaincode
+peer lifecycle chaincode commit -o orderer:7050 --channelID mychannel --name basic --version 1.0 --sequence 1 --init-required --tls true --cafile $ORDERER_CA --peerAddresses peer0-org1:7051 --tlsRootCertFiles /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0-org2:7051 --tlsRootCertFiles /organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --peerAddresses peer0-org3:7051 --tlsRootCertFiles /organizations/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt
+
+
+
+ InitLedger command
+peer chaincode invoke -o orderer:7050 --isInit --tls true --cafile $ORDERER_CA -C mychannel -n basic --peerAddresses peer0-org1:7051 --tlsRootCertFiles /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0-org2:7051 --tlsRootCertFiles /organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --peerAddresses peer0-org3:7051 --tlsRootCertFiles /organizations/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt -c '{"Args":["InitLedger"]}' --waitForEvent
+
+
+invoke command
+peer chaincode invoke -o orderer:7050 --tls true --cafile $ORDERER_CA -C mychannel -n basic --peerAddresses peer0-org1:7051 --tlsRootCertFiles /organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0-org2:7051 --tlsRootCertFiles /organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --peerAddresses peer0-org3:7051 --tlsRootCertFiles /organizations/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt -c '{"Args":["CreateAsset","asset100","red","50","tom","300"]}' --waitForEvent
+
+
+query command
+peer chaincode query -C mychannel -n basic -c '{"Args":["GetAllAssets"]}'
+

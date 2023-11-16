@@ -1,0 +1,62 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+spec:
+
+  tls:
+    - hosts:
+        - hlf-k8.tk
+        - api.hlf-k8.tk
+        - explorer.hlf-k8.tk
+        - grafana.hlf-k8.tk
+      secretName: tls-cert
+  rules:
+    - host: hlf-k8.tk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    - host: api.hlf-k8.tk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 4000
+
+
+    - host: explorer.hlf-k8.tk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: explorer
+                port:
+                  number: 8080
+
+
+    - host: grafana.hlf-k8.tk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000

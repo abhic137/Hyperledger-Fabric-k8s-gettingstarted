@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      volumes:
+        - name: grafana-config
+          configMap: 
+           name: grafana-config
+           items:
+              - key: datasource.yml
+                path: datasource.yml
+              - key: dashboard.json
+                path: dashboard.json
+              - key: dashboard.yaml
+                path: dashboard.yaml
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        env:
+          - name: GF_PATHS_PROVISIONING
+            value: /var/lib/grafana/provisioning/
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+         - name:  grafana-config
+           mountPath:  /var/lib/grafana/provisioning/datasources/datasource.yml
+           subPath: datasource.yml
+         - name:  grafana-config
+           mountPath:  /var/lib/grafana/provisioning/dashboards/hlf/dashboard.json
+           subPath: dashboard.json
+         - name:  grafana-config
+           mountPath:  /var/lib/grafana/provisioning/dashboards/dashboard.yaml
+           subPath: dashboard.yaml
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  selector:
+    app: grafana
+  ports:
+  - port: 3000
+    targetPort: 3000
+
+
+
