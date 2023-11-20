@@ -117,8 +117,67 @@ kubectl describe deployment nginx-deployment
 ```
 kubectl get pods -o wide
 ```
+
 updating the deployment (updating the image and incresaing the replicas)
 ```
 kubectl apply - https://k8s.io/examples/application/deployment-scale.yaml
 ```
 we can directly scale the number of repicas from the lens IDE directly
+
+## CA server
+on master node (host)
+copy all the data from the prerequsies folder to the nfs client folder to make it available in the nfs server
+```
+cp -R prerequsite/* ../nfs_clientshare
+ls ../nfs_clientshare
+ls
+mkdir organizations
+mv -r fabric-ca organizations
+
+```
+Go into the NFS server 
+```
+cd /mnt/nfs_share
+chmod +x scripts/ -R
+chmod 777 organizations/ -R
+```
+on host
+```
+cd 2.ca
+kubectl apply ca-org1.yaml
+kubectl apply ca-org1-service.yaml
+```
+the only change between the diffrent ca-org files is the name  and the port number
+now apply all the files in the 2.ca directory for that we have to use the command
+```
+kubectl apply -f .
+```
+go to lens IDE to see the pods of CA
+
+## Generating Certificates for peers and orderer orgs
+Kubernetes Jobs: Jobs ensure that one or more pods execute
+their commands and exit successfully. When all the pods have
+exited without errors, the Job gets completed. When the Job
+gets deleted, any created pods get deleted as well
+
+```
+cd 3.certificates
+kubectl apply -f job.yaml
+```
+go into the shell of create-certs throuth lensIDE or through cli with kubectl exec -it command
+```
+ls # you will find the organizations directory here
+```
+after sometime the job will stop afer generating the certificate
+the certificates will be stored in the NFS server
+you can check it in the nfs server location
+```
+cd organizations
+ls
+```
+here you will find 2 folders ```peerOrganizations``` and ```ordererOrganizations```
+
+## Creating Genesis block and Channel transcation
+
+```
+```
