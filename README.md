@@ -202,3 +202,10 @@ kube ctlget svc
 output:
 ![oput](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/a0048b6d-aed7-49bb-a35d-e7b013cb94e2)
 
+we can also check it in the lens IDE
+## Starting Peers services
+
+```
+cd 6.configmap
+kubectl appy -f .
+```
