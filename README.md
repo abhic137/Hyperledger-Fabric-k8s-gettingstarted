@@ -177,7 +177,28 @@ ls
 ```
 here you will find 2 folders ```peerOrganizations``` and ```ordererOrganizations```
 
-## Creating Genesis block and Channel transcation
+## Creating Genesis block and Channel transaction
+in host
+```
+cd  4.artifacts
+kubectl apply -f .
+```
+check in lens IDE it ill create artifacts and then stop running go to the nfs_client share folder to check
+```
+cd ../nfs_clienshare
+ls
+ls  channel artifacts ## look for org1,2,3, and mychannel
+ls gensesis-block  ##look for genisis.block
+```
+you will see a folder named channel artifacts and system-genesis-block
+## Starting Ordering Services
+on host machine
+```
+cd 5.orderer
+kubectl apply -f .
+kubectl get deployments
+kube ctlget svc
+```
+output:
+![oput](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/a0048b6d-aed7-49bb-a35d-e7b013cb94e2)
 
-```
-```
