@@ -374,10 +374,29 @@ tar cfz basic-org2.tgz code.tar.gz metadata.json
 Edit the file for org3
 ```
 nano connection.json
+rm code.tar.gz
 ```
-```Change the basic-org1 to basic-org3```
+```Change the basic-org2 to basic-org3```
 Execute the commands
 ```
 tar cfz code.tar.gz connection.json
 tar cfz basic-org3.tgz code.tar.gz metadata.json
+```
+to check 
+```
+ls
+```
+![Screenshot from 2023-11-21 14-42-11](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/1f38dc5a-8a36-4523-8ff8-0174ddc8f590)
+
+### Installing chain code
+go to the cli of the org1 pod
+
+```
+cd /opt/gopath/src/github.com/chincode/
+ls
+cd basic/
+ls
+cd packaging/
+ls
+peer lifecycle chaincode install basic-org1.tgz
 ```
