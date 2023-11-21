@@ -220,4 +220,11 @@ kubectl get deployments
 ```
 this should be the output
 ![Screenshot from 2023-11-21 11-45-06](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/61da7c49-23f1-4a6d-8cf9-99546d2be2dd)
+If this happens 
+![Screenshot from 2023-11-21 11-50-48](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/d134417f-5f97-42c6-aa2c-7693571faacd)
+![Screenshot from 2023-11-21 11-52-15](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/7af29644-f459-4cc9-b47c-832e616da859)
+
+
+This might be the issue 
+![Screenshot from 2023-11-21 11-49-49](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/34b21a6c-7254-472c-9986-c3fdcfc4c656)
 
