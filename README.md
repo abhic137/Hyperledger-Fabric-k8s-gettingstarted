@@ -435,3 +435,11 @@ docker build -t <USER_NAME>/<REPO NAME>:1.0 .
 
 
 ```
+in the 9.cc-deploy folder
+in the given file edit the CHAINCODE_ID value (bottom line) with the ID that we have stored in the note.txt
+for org1 deployment file you have to add the value of the org1 and its the same with the org2 and org3
+```
+sudo nano org1-chaincode-deployment.yaml
+```
+![Screenshot from 2023-11-21 17-12-35](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/478a680e-362c-4975-a13f-c87dd89716ac)
+
