@@ -420,4 +420,11 @@ create a txt file names note.txt
 copy and paste the last line in txt file from the org1 org2 and org3 cli
 
  ![Screenshot from 2023-11-21 16-44-35](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/4b4ebafd-4518-4552-8ccb-e2a2091ea3f3)
+create chain code deployment
+check the 9.cc-deploy/basic/org1-chaincode-deployment.yaml here you have to look for the container imahe
+* this image holds the chain code, we have to create a ```docker hub repository``` first 
+* in Hyperledger-Fabric-k8s-gettingstarted/8.chaincode/basic/assetTransfer.go
+* we have to add the info at the line 271 and 272
+```
 
+```
