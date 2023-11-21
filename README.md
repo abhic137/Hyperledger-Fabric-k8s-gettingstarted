@@ -392,11 +392,27 @@ ls
 go to the cli of the org1 pod
 
 ```
-cd /opt/gopath/src/github.com/chincode/
+cd /opt/gopath/src/github.com/chaincode/
 ls
 cd basic/
 ls
 cd packaging/
 ls
 peer lifecycle chaincode install basic-org1.tgz
+```
+go to the cli of the org2 pod
+
+```
+cd /opt/gopath/src/github.com/chaincode/
+ls
+cd basic/
+ls
+cd packaging/
+ls
+peer lifecycle chaincode install basic-org2.tgz
+```
+Go to the cli of the org3
+```
+cd /opt/gopath/src/github.com/chaincode/basic/packaging
+peer lifecycle chaincode install basic-org3.tgz
 ```
