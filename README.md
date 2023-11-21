@@ -432,6 +432,7 @@ ls
 cat Dockerfile
 # login into docker (docker login)to push the images into the repository created
 docker build -t <USER_NAME>/<REPO NAME>:1.0 .
+docker push <USER_NAME>/<REPONAME>:1.0
 
 
 ```
@@ -441,5 +442,6 @@ for org1 deployment file you have to add the value of the org1 and its the same 
 ```
 sudo nano org1-chaincode-deployment.yaml
 ```
+EDIT LINE 26
 ![Screenshot from 2023-11-21 17-12-35](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/478a680e-362c-4975-a13f-c87dd89716ac)
-
+* Repest the same for the org2 and org 3 deployment files change the id values rom the note.txt
