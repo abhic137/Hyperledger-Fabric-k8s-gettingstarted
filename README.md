@@ -209,3 +209,15 @@ we can also check it in the lens IDE
 cd 6.configmap
 kubectl appy -f .
 ```
+```
+cd 7.peers/org1
+kubectl apply -f .
+cd ..
+kubectl apply -f 7.peers/org2
+kubectl apply -f 7.peers/org3
+kubectl get deployments
+
+```
+this should be the output
+![Screenshot from 2023-11-21 11-45-06](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/61da7c49-23f1-4a6d-8cf9-99546d2be2dd)
+
