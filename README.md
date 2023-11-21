@@ -220,6 +220,7 @@ kubectl get deployments
 ```
 this should be the output
 ![Screenshot from 2023-11-21 11-45-06](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/61da7c49-23f1-4a6d-8cf9-99546d2be2dd)
+
 If this happens 
 ![Screenshot from 2023-11-21 11-50-48](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/d134417f-5f97-42c6-aa2c-7693571faacd)
 ![Screenshot from 2023-11-21 11-52-15](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/7af29644-f459-4cc9-b47c-832e616da859)
@@ -228,3 +229,155 @@ If this happens
 This might be the issue 
 ![Screenshot from 2023-11-21 11-49-49](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/34b21a6c-7254-472c-9986-c3fdcfc4c656)
 
+This is how LENS IDE should look
+![Screenshot from 2023-11-21 11-54-43](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/fdea83e1-6f0b-45dd-9b8b-0f07fabce84f)
+
+
+## Channel operation
+go inside the cli of org 1 for channel creation
+and run the commands
+![Screenshot from 2023-11-21 12-11-32](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/512b2abd-8371-44e2-820f-92366763df67)
+
+```
+ls
+cd scripts
+./createAppChannel.sh
+ls channel-artifact/
+```
+### for peer channel join
+
+```
+cd
+peer channel join -b ./channel-artifacts/mychannel.block
+```
+join channel for other peers as well
+GO to org 2 shell
+```
+peer channel join -b ./channel-artifacts/mychannel.block
+
+```
+To verify use the command
+inside the org2 cli
+```
+peer channel list
+```
+go to the shell of the org 3
+```
+peer channel join -b ./channel-artifacts/mychannel.block
+
+```
+verify
+```
+peer channel list
+
+```
+### Updating the aanchor peers
+go to the shell of cli org1
+```
+./scripts/updateAnchorPeer.sh Org1MSP
+```
+go to the cli of org2
+```
+./scripts/updateAnchorPeer.sh Org2MSP
+
+```
+go to the cli of org3
+```
+./scripts/updateAnchorPeer.sh Org3MSP
+
+```
+## Chain code Operation
+External Builders and Launchers
+• Prior to Hyperledger Fabric 2.0, the process used to build and launch
+chaincode was part of the peer implementation and could not be easily
+customized.
+• This build process would generate a Docker container image that would be
+launched to execute chaincode that connected as a client to the peer.
+External builder and launcher API
+An external builder and launcher consists of four programs or scripts:
+• bin/detect: Determine whether or not this buildpack should be used to build
+the chaincode package and launch it.
+• bin/build: Transform the chaincode package into executable chaincode.
+• bin/release (optional): Provide metadata to the peer about the chaincode.
+• bin/run (optional): Run the chaincode.
+Steps involved in running an external chaincode server
+1. Configure the peer service to handle external chaincode builders. i.e. Tell the
+peer node to not package and run the chaincode by itself.
+Configuring the peer to use external builders involves adding an externalBuilder element under the
+chaincode configuration block in the core.yaml that defines external builders.
+#List of directories to treat as external builders and launchers for
+#chaincode. The external builder detection processing will iterate over the
+#builders in the order specified below.
+externalBuilders:
+- name: external-builder
+path: /builders/external
+environmentwhitelist:
+- GOPROXY
+Steps involved in running an external chaincode server
+1. Configure the peer service to handle external chaincode builders. i.e. Tell the peer node
+to not package and run the chaincode by itself.
+2. Inform the peer node about external chaincode's availability. i.e. Tell the peer
+node where can it find the external chaincode service. This is given through the
+connection.json file. The file itself is packaged into external builder package as
+expected.
+"address": "basic-org1:7052",
+"dial
+timeout": "10s",
+"tls required": false,
+"client_auth_required": false,
+"client_key":
+"---BEGIN EC PRIVATE KEY-.-
+-END EC PRIVATE KEY-..",
+"client cert":
+"...-BEGIN CERTIFICATE-...-
+"root_cert": "-..-BEGIN CERTIFICATE-•.• ...
+...-END CERTIFICATE-•..",
+--END CERTIFICATE----"
+3.Install the chaincode package that carries connection.json file
+4.Run the chaincode server externally.
+5.Approve and commit the chaincode for a particular channel
+
+* Points to Ponder
+• Chaincode server can be started/stopped any number of times. If the peer
+node does not find a connection to the running instance of chaincode server it
+will establish one when either commit, invoke or query.
+• Multiple peers can connect to a single instance of a chaincoder server. This is
+because the peer node passes the context required in every request.
+• Currently external chaincode service is only available for golang chaincode
+## Packaging the chain code
+in host machine
+```
+cd ../nfs_clientshare
+ls
+cd chaincode/basic/packaging
+ls
+cat connection.json
+cat metadata.json
+```
+for packaging the chain code
+```
+tar cfz code.tar.gz connection.json
+ls
+tar cfz basic-org1.tgz code.tar.gz metadata.json
+rm code.tar.gz
+```
+Edit this file (for doing the same thing for org2 and org3) 
+```
+nano connection.json
+```
+```Change the basic-org1 to basic-org2```
+Execute the commands
+```
+tar cfz code.tar.gz connection.json
+tar cfz basic-org2.tgz code.tar.gz metadata.json
+```
+Edit the file for org3
+```
+nano connection.json
+```
+```Change the basic-org1 to basic-org3```
+Execute the commands
+```
+tar cfz code.tar.gz connection.json
+tar cfz basic-org3.tgz code.tar.gz metadata.json
+```
