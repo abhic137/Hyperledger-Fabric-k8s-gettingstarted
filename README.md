@@ -416,3 +416,8 @@ Go to the cli of the org3
 cd /opt/gopath/src/github.com/chaincode/basic/packaging
 peer lifecycle chaincode install basic-org3.tgz
 ```
+create a txt file names note.txt
+copy and paste the last line in txt file from the org1 org2 and org3 cli
+
+ ![Screenshot from 2023-11-21 16-44-35](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/4b4ebafd-4518-4552-8ccb-e2a2091ea3f3)
+
