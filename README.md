@@ -425,6 +425,13 @@ check the 9.cc-deploy/basic/org1-chaincode-deployment.yaml here you have to look
 * this image holds the chain code, we have to create a ```docker hub repository``` first 
 * in Hyperledger-Fabric-k8s-gettingstarted/8.chaincode/basic/assetTransfer.go
 * we have to add the info at the line 271 and 272
+for creating chain code image
 ```
+cd /8.chaincode/basic/
+ls
+cat Dockerfile
+# login into docker (docker login)to push the images into the repository created
+docker build -t <USER_NAME>/<REPO NAME>:1.0 .
+
 
 ```
