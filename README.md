@@ -461,3 +461,28 @@ go into the cli of org 1 org 2 and org 3 container
 * in org 1 paste the 11 and 12 th line from the ```notes.txt``` into the org1 cli
 * in org 2 paste the 15 and 16 line (dont forget to replace the token of org 2) in the org2 cli
 * in org 3 paste the 19 and 20 line (dont forget to replace the token of org 3 ) in the org3 cli
+* to ehcek the rediness run the line 25 in any og the org1 2 and 3 it should return org1MSP,2,3 = true
+
+### commiting the chain code
+* use the line number 29 run it in org3 cli it sjould show VALID
+* use the command
+```
+peer lifecycle chaincode querycommitted -C mychannel
+```
+### Transaction Invocation
+* execute the line 34 in any of the cli (org1 2 3)
+* run this command in the other org cli
+```
+peer chaincode query -C mychannel -n basic -c '{"Args":["GetAllAssets"]}'
+```
+* run the 38 line in org 3 or in any org cli
+### Accessing the CouchDB
+It s a state databse
+we have to port forawrd to access the DB in the host machine (master node)
+```
+kubectl port-forward services/peer0-org1 5984:5984
+```
+go to this on your pc
+```
+http://127.0.0.1:5984
+```
