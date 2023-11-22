@@ -486,3 +486,5 @@ go to this on your pc
 ```
 http://127.0.0.1:5984
 ```
+## API SERVER
+### Regestering user
