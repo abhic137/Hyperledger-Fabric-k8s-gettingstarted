@@ -444,4 +444,20 @@ sudo nano org1-chaincode-deployment.yaml
 ```
 EDIT LINE 26
 ![Screenshot from 2023-11-21 17-12-35](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/478a680e-362c-4975-a13f-c87dd89716ac)
-* Repest the same for the org2 and org 3 deployment files change the id values rom the note.txt
+* Repeat the same for the org2 and org 3 deployment files change the id values rom the note.txt
+### Chain code service starting
+on host
+```
+cd
+cd 9.cc-deploy
+cd basic
+ls
+kubectl apply -f .
+kubectl get pods
+```
+### Chain code approve
+go into the cli of org 1 org 2 and org 3 container
+* in the notes.txt file in the line 11 and 12 replace the basic id token with the token that we got and stored acording the org1 org2 and org3
+* in org 1 paste the 11 and 12 th line from the ```notes.txt``` into the org1 cli
+* in org 2 paste the 15 and 16 line (dont forget to replace the token of org 2) in the org2 cli
+* in org 3 paste the 19 and 20 line (dont forget to replace the token of org 3 ) in the org3 cli
