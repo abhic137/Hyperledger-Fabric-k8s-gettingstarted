@@ -487,4 +487,46 @@ go to this on your pc
 http://127.0.0.1:5984
 ```
 ## API SERVER
-### Regestering user
+
+```
+cd 10.api/src
+ls
+#npm init -y
+```
+go to the host machine
+```
+cd ../nfs_clientshare
+./scripts/cpp.sh
+ls connection-profile
+cat connection-profile/connection-org1.json
+```
+### Overriding Fabric CA default config
+```
+cd 10.api/k8
+cat configmap.yaml
+kubectl apply -f .
+```
+here in the api.yaml we can create our own docker image with the help of the docker file in the /src folder.
+### Starting thr API server
+```
+cd 10.api/k8
+kubectl get deployments
+```
+you can also check in the LensIDE
+frist portforawrd the service
+```
+kubectl port-forward services/api 4000
+```
+Now we can use the postman to interact with the API
+add this in the postman app
+```http://127.0.0.1:4000/register```
+![Screenshot from 2023-11-22 15-03-15](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/f56a429d-5e72-4e0a-b335-21cbfa127c58)
+To check create asset
+![Screenshot from 2023-11-22 15-30-03](https://github.com/abhic137/Hyperledger-Fabric-k8s-gettingstarted/assets/46273637/3c1fa2a4-2765-4bd2-883d-ac4d80ee24f2)
+check the added info in the couch DB
+```
+kubectl port-forward services/peer0-org1 5984:5984
+```
+
+
+
