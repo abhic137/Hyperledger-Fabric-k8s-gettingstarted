@@ -1,3 +1,59 @@
+#########K8s Dashboard ##########
+
+
+Step 2: Run the Below command to Enable the Dashboard
+
+***kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+
+Step 3: Create users and roles for the dashboard
+
+****nano admin-user-service-account.yaml
+ 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+*****nano admin-user-cluster-role-binding.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+####Run below command to create user
+
+kubectl apply -f admin-user-service-account.yaml -f admin-user-cluster-role-binding.yaml
+
+#######output should look like below
+
+serviceaccount/admin-user created
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+
+Ste4: Create Token for user
+
+*********kubectl -n kubernetes-dashboard create token admin-user
+
+####Output should look like
+
+eyJhbGciOiJSUzI1Ni
+
+Step 5: Run Below command for port fordwarding
+
+kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
+
+
+
 #####
 ## NFS Server
 
