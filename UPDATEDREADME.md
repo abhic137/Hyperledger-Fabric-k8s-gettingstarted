@@ -3,8 +3,10 @@
 
 Step 2: Run the Below command to Enable the Dashboard
 
-***kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-
+***
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+```
 
 Step 3: Create users and roles for the dashboard
 
@@ -49,6 +51,9 @@ kubectl -n kubernetes-dashboard create token admin-user
 ####Output should look like
 ```
 eyJhbGciOiJSUzI1Ni
+```
+```
+kubectl proxy
 ```
 Step 5: Run Below command for port fordwarding
 ```
