@@ -139,7 +139,7 @@ chmod 777 organizations/ -R
 
 
 
-#####5.orderer###########
+##  5.orderer
 
 #####create deployment of orderer
 
@@ -154,7 +154,7 @@ chmod 777 organizations/ -R
 ####check pods and deployments pods and check logs as well of all pods on lens app
 
 
-####6.configmap
+## 6.configmap
 ###########create k8s configmap....core.yaml and external chaincode build scripts
 ###create builder-configmap.yaml
 ###aplly kubectl command
@@ -256,7 +256,7 @@ all chaincode tar file is there
 asset:04a2985d68a1ec427d874286ff090fac6e9be1174b05e70fd20733a9b58ea109
 
 
-#####9.cc-deploy
+## 9.cc-deploy
 
 #####Now create deployment for the chaincode
 
